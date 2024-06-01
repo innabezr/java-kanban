@@ -19,14 +19,14 @@ public class Main {
         taskManager.createTask(task1);
         taskManager.createTask(task2);
 
-        Epic epic1 = new Epic("Эпическая задача 1", "Описание первой эпической задачи", Status.NEW);
+        Epic epic1 = new Epic("Эпическая задача 1", "Описание первой эпической задачи");
         taskManager.createEpicTask(epic1);
         Subtask subtask1 = new Subtask("Подзадача 1", "Описание подзадачи 1", Status.NEW, epic1.getId());
         Subtask subtask2 = new Subtask("Подзадача 2", "Описание подзадачи 2", Status.NEW, epic1.getId());
         taskManager.createSubtask(epic1.getId(), subtask1);
         taskManager.createSubtask(epic1.getId(), subtask2);
 
-        Epic epic2 = new Epic("Эпическая задача 2", "Описание второй эпической задачи", Status.NEW);
+        Epic epic2 = new Epic("Эпическая задача 2", "Описание второй эпической задачи");
         taskManager.createEpicTask(epic2);
         Subtask subtask3 = new Subtask("Подзадача 3", "Описание подзадачи 3", Status.NEW, epic2.getId());
         taskManager.createSubtask(epic2.getId(), subtask3);
