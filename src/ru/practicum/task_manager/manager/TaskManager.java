@@ -16,7 +16,6 @@ public interface TaskManager {
     List<Subtask> getSubtasks();
 
 
-
     //b. Удаление всех задач:
     boolean deleteAllTask();
 

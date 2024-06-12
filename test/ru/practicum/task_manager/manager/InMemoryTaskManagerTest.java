@@ -1,4 +1,4 @@
-import ru.practicum.task_manager.manager.InMemoryTaskManager;
+import ru.practicum.task_manager.manager.TaskManager;
 import ru.practicum.task_manager.task.Epic;
 import ru.practicum.task_manager.task.Status;
 import ru.practicum.task_manager.task.Subtask;
@@ -8,11 +8,11 @@ import ru.practicum.task_manager.task.Task;
 import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryTaskManagerTest {
-    private InMemoryTaskManager taskManager;
+    private TaskManager taskManager;
 
     @org.junit.jupiter.api.BeforeEach
     public void BeforeEach() {
-        taskManager = new InMemoryTaskManager();
+        taskManager = Managers.getDefault();
     }
 
     @org.junit.jupiter.api.Test

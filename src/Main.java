@@ -1,11 +1,9 @@
-import ru.practicum.task_manager.manager.InMemoryHistoryManager;
-import ru.practicum.task_manager.manager.InMemoryTaskManager;
+import ru.practicum.task_manager.manager.HistoryManager;
+import ru.practicum.task_manager.manager.TaskManager;
 import ru.practicum.task_manager.task.Epic;
 import ru.practicum.task_manager.task.Status;
 import ru.practicum.task_manager.task.Subtask;
 import ru.practicum.task_manager.task.Task;
-
-import java.util.ArrayList;
 
 
 public class Main {
@@ -15,8 +13,8 @@ public class Main {
     }
 
     private static void testTasks() {
-        InMemoryTaskManager taskManager = Managers.getDefault();
-        InMemoryHistoryManager historyManager = Managers.getDefaultHistory();
+        TaskManager taskManager = Managers.getDefault();
+        HistoryManager historyManager = Managers.getDefaultHistory();
         Task task1 = new Task("Задача первая", "Описание первой задачи", Status.NEW);
         Task task2 = new Task("Задача вторая", "Описание второй задачи", Status.NEW);
 
