@@ -1,8 +1,12 @@
-import ru.practicum.task_manager.manager.TaskManager;
+import ru.practicum.task_manager.manager.InMemoryHistoryManager;
+import ru.practicum.task_manager.manager.InMemoryTaskManager;
 import ru.practicum.task_manager.task.Epic;
 import ru.practicum.task_manager.task.Status;
 import ru.practicum.task_manager.task.Subtask;
 import ru.practicum.task_manager.task.Task;
+
+import java.util.ArrayList;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -11,8 +15,8 @@ public class Main {
     }
 
     private static void testTasks() {
-        TaskManager taskManager = new TaskManager();
-
+        InMemoryTaskManager taskManager = Managers.getDefault();
+        InMemoryHistoryManager historyManager = Managers.getDefaultHistory();
         Task task1 = new Task("Задача первая", "Описание первой задачи", Status.NEW);
         Task task2 = new Task("Задача вторая", "Описание второй задачи", Status.NEW);
 
@@ -56,8 +60,10 @@ public class Main {
         System.out.println("Статус 3 подзадачи: " + subtask3.getStatus());
         System.out.println("Статус эпика: " + epic2.getStatus());
         System.out.println();
-        System.out.println("Эпическая задача удалилась " + (taskManager.deleteEpicWithId(epic1.getId())));
-        System.out.println("Задача удалилась " + (taskManager.deleteTaskWithId(task1.getId())));
 
+        taskManager.getTaskWithId(task1.getId());
+        taskManager.getSubtaskWithId(subtask2.getId());
+        taskManager.getEpicWithId(epic1.getId());
+        System.out.println(historyManager.getHistory());
     }
 }
