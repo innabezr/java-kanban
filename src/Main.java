@@ -63,5 +63,7 @@ public class Main {
         taskManager.getSubtaskWithId(subtask2.getId());
         taskManager.getEpicWithId(epic1.getId());
         System.out.println(historyManager.getHistory());
+        historyManager.clearHistory();
+        System.out.println(historyManager.getHistory());
     }
 }
