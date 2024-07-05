@@ -11,8 +11,14 @@ public class InMemoryTaskManager implements TaskManager {
     private int nextId;
     private final Map<Integer, Task> tasks = new HashMap<>();
     private final Map<Integer, Epic> epics = new HashMap<>();
-    private HistoryManager historyManager = new InMemoryHistoryManager();
+    private final HistoryManager historyManager = Managers.getDefaultHistory();
     private final TreeSet<Integer> availableIdList = new TreeSet<>();
+
+
+    @Override
+    public HistoryManager getHistoryManager() {
+        return historyManager;
+    }
 
     private int getNextId() {
         if (!availableIdList.isEmpty()) {

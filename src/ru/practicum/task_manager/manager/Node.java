@@ -1,4 +1,5 @@
 package ru.practicum.task_manager.manager;
+
 import ru.practicum.task_manager.task.Task;
 
 public class Node {

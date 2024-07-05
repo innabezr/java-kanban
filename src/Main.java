@@ -1,4 +1,4 @@
-import ru.practicum.task_manager.manager.HistoryManager;
+import ru.practicum.task_manager.manager.Managers;
 import ru.practicum.task_manager.manager.TaskManager;
 import ru.practicum.task_manager.task.Epic;
 import ru.practicum.task_manager.task.Status;
@@ -14,7 +14,6 @@ public class Main {
 
     private static void testTasks() {
         TaskManager taskManager = Managers.getDefault();
-        HistoryManager historyManager = Managers.getDefaultHistory();
         //1.Создайте две задачи, эпик с тремя подзадачами и эпик без подзадач.
         Task task1 = new Task("Задача первая", "Описание первой задачи", Status.NEW);
         Task task2 = new Task("Задача вторая", "Описание второй задачи", Status.NEW);
@@ -39,7 +38,7 @@ public class Main {
         taskManager.getTaskWithId(task2.getId());
         taskManager.getSubtaskWithId(subtask1.getId());
         //3.После каждого запроса выведите историю и убедитесь, что в ней нет повторов.
-        System.out.println(historyManager.getHistory());
+        System.out.println(taskManager.getHistoryManager().getHistory());
         System.out.println();
 
         taskManager.getSubtaskWithId(subtask3.getId());
@@ -50,7 +49,7 @@ public class Main {
         taskManager.getTaskWithId(task2.getId());
         taskManager.getTaskWithId(epic2.getId());
 
-        System.out.println(historyManager.getHistory());
+        System.out.println(taskManager.getHistoryManager().getHistory());
         System.out.println();
 
         taskManager.getTaskWithId(task1.getId());
@@ -61,15 +60,15 @@ public class Main {
         taskManager.getTaskWithId(task2.getId());
         taskManager.getEpicWithId(epic2.getId());
 
-        System.out.println(historyManager.getHistory());
+        System.out.println(taskManager.getHistoryManager().getHistory());
         System.out.println();
         //4. Удалите задачу, которая есть в истории, и проверьте, что при печати она не будет выводиться.
         taskManager.deleteTaskWithId(task2.getId());
-        System.out.println(historyManager.getHistory());
+        System.out.println(taskManager.getHistoryManager().getHistory());
         System.out.println();
         //5. Удалите эпик с тремя подзадачами и убедитесь, что из истории удалился как сам эпик, так и все его подзадачи.
         taskManager.deleteEpicWithId(epic1.getId());
-        System.out.println(historyManager.getHistory());
+        System.out.println(taskManager.getHistoryManager().getHistory());
         System.out.println();
     }
 }
