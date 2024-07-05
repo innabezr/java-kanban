@@ -10,10 +10,7 @@ import java.util.Map;
 public class InMemoryHistoryManager implements HistoryManager {
     private Node first;
     private Node last;
-
     private Map<Integer, Node> nodeMap = new HashMap<>();
-    private static final List<Task> history = new ArrayList<>();
-
 
     @Override
     public void add(Task task) {
@@ -23,7 +20,13 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public List<Task> getHistory() {
-        return List.copyOf(history);
+        List<Task> history = new ArrayList<>();
+        Node current = first;
+        while (current != null) {
+            history.add(current.value);
+            current = current.next;
+        }
+        return history;
     }
 
     @Override
@@ -50,41 +53,22 @@ public class InMemoryHistoryManager implements HistoryManager {
                 last = newNode;
             }
             nodeMap.put(task.getId(), newNode);
-            getTasks();
         }
     }
 
-    public void getTasks() {
-        history.clear();
-        Node current = first;
-        while (current != null) {
-            history.add(current.value);
-            current = current.next;
-        }
-    }
 
     private void removeNode(Node node) {
         if (node != null) {
-            Task taskToRemove = node.value;
             if (node.prev == null) {
                 first = node.next;
-                if (first != null) {
-                    first.prev = null;
-                }
             } else {
                 node.prev.next = node.next;
             }
             if (node.next == null) {
                 last = node.prev;
-                if (last != null) {
-                    last.next = null;
-                }
             } else {
                 node.next.prev = node.prev;
             }
-            history.remove(taskToRemove);
         }
-
     }
-
 }
