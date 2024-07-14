@@ -53,7 +53,6 @@ public class Task {
         this.status = status;
     }
 
-
     @Override
     public String toString() {
         return "Task{" +
@@ -63,6 +62,7 @@ public class Task {
                 ", status=" + status +
                 '}';
     }
+
 
     @Override
     public boolean equals(Object o) {

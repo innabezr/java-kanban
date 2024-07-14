@@ -1,3 +1,6 @@
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import ru.practicum.task_manager.manager.Managers;
 import ru.practicum.task_manager.manager.TaskManager;
 import ru.practicum.task_manager.task.Epic;
 import ru.practicum.task_manager.task.Status;
@@ -5,24 +8,26 @@ import ru.practicum.task_manager.task.Subtask;
 import ru.practicum.task_manager.task.Task;
 
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryTaskManagerTest {
     private TaskManager taskManager;
 
-    @org.junit.jupiter.api.BeforeEach
+    @BeforeEach
     public void BeforeEach() {
         taskManager = Managers.getDefault();
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void EpicEqlByIdTest() {
         Task task1 = new Task(1, "Task 1", "Description 1", Status.NEW);
         Task task2 = new Task(1, "Task 1", "Description 1", Status.NEW);
         assertEquals(task1, task2);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void TaskEqlByIdTest() {
         Epic epic1 = new Epic("Эпическая задача 1", "Описание первой эпической задачи");
         Epic epic2 = new Epic("Эпическая задача 1", "Описание первой эпической задачи");
@@ -46,13 +51,13 @@ class InMemoryTaskManagerTest {
     //taskManager.createSubtask(epic1.getId(), epic1);
     // }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void classManagerTest() {
         taskManager = Managers.getDefault();
         assertNotNull(Managers.getDefault());
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void searchByIdTMTest() {
         Task task = new Task("Task", "Description", Status.NEW);
         Epic epic = new Epic("Epic", "Description");
@@ -65,8 +70,8 @@ class InMemoryTaskManagerTest {
         assertEquals(subtask, taskManager.getSubtaskWithId(subtask.getId()));
     }
 
-    @org.junit.jupiter.api.Test
-    void taskWithIdAndAutoIdDontConflictTest() {
+    @Test
+    void taskWithIdTest() {
         Task task1 = new Task(0, "Задача1", "Описание", Status.NEW);
         Task task2 = new Task("Задача2", "Описание", Status.NEW);
         taskManager.createTask(task1);
@@ -75,8 +80,8 @@ class InMemoryTaskManagerTest {
         assertNotEquals(task1.getId(), task2.getId());
     }
 
-    @org.junit.jupiter.api.Test
-    void compareAllTaskFieldTest() {
+    @Test
+    void compareAllFieldTest() {
         Task task1 = new Task(0, "Задача1", "Описание", Status.NEW);
         taskManager.createTask(task1);
         assertEquals(task1.getId(), 0);
@@ -84,4 +89,83 @@ class InMemoryTaskManagerTest {
         assertEquals(task1.getDescription(), "Описание");
         assertEquals(task1.getStatus(), Status.NEW);
     }
+
+    @Test
+    void deletedSubtask() {
+        Epic epic = new Epic("Epic", "Description");
+        taskManager.createEpicTask(epic);
+        Subtask subtask1 = new Subtask("Subtask1", "Description", Status.NEW, epic.getId());
+        Subtask subtask2 = new Subtask("Subtask2", "Description", Status.NEW, epic.getId());
+        taskManager.createSubtask(epic.getId(), subtask1);
+        taskManager.createSubtask(epic.getId(), subtask2);
+        int idToDelete = subtask1.getId();
+        taskManager.deleteSubtaskWithId(idToDelete);
+        Subtask deletedSubtask = taskManager.getSubtaskWithId(idToDelete);
+        assertNull(deletedSubtask);
+    }
+
+    @Test
+    public void epicFreeFromSubtask() {
+        Epic epic = new Epic("Epic", "Description");
+        taskManager.createEpicTask(epic);
+        Subtask subtask1 = new Subtask("Subtask1", "Description", Status.NEW, epic.getId());
+        Subtask subtask2 = new Subtask("Subtask2", "Description", Status.NEW, epic.getId());
+        taskManager.createSubtask(epic.getId(), subtask1);
+        taskManager.createSubtask(epic.getId(), subtask2);
+        int idToDelete = subtask1.getId();
+        taskManager.deleteSubtaskWithId(idToDelete);
+        List<Subtask> epicSubtasks = taskManager.getAllEpicSubtasks(epic.getId());
+        boolean idToDeleteExists = false;
+        for (Subtask subtask : epicSubtasks) {
+            if (subtask.getId() == idToDelete) {
+                idToDeleteExists = true;
+                break;
+            }
+        }
+        assertFalse(idToDeleteExists);
+        for (Subtask subtask : epicSubtasks) {
+            assertNotNull(taskManager.getSubtaskWithId(subtask.getId()));
+        }
+    }
+
+    @Test
+    void testSetters() {
+        Task task = new Task(1, "Task 1", "Description 1", Status.NEW);
+        task.setName("Updated Task");
+        task.setDescription("Updated Description");
+        task.setStatus(Status.IN_PROGRESS);
+        assertEquals("Updated Task", task.getName());
+        assertEquals("Updated Description", task.getDescription());
+        assertEquals(Status.IN_PROGRESS, task.getStatus());
+    }
+
+    @Test
+    void testGetters() {
+        Task task = new Task(1, "Task 1", "Description 1", Status.NEW);
+        assertEquals(1, task.getId());
+        assertEquals("Task 1", task.getName());
+        assertEquals("Description 1", task.getDescription());
+        assertEquals(Status.NEW, task.getStatus());
+    }
+
+    @Test
+    void UpdateTaskTest() {
+        Task task = new Task(1, "Task 1", "Description 1", Status.NEW);
+        taskManager.createTask(task);
+        task.setName("Updated Task");
+        task.setDescription("Updated Description");
+        task.setStatus(Status.IN_PROGRESS);
+        taskManager.updateTask(task);
+        Task updatedTask = taskManager.getTaskWithId(task.getId());
+        assertNotNull(updatedTask);
+        assertEquals("Updated Task", updatedTask.getName());
+        assertEquals("Updated Description", updatedTask.getDescription());
+        assertEquals(Status.IN_PROGRESS, updatedTask.getStatus());
+    }
+
 }
+
+
+
+
+

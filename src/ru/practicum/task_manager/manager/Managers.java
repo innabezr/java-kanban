@@ -1,7 +1,4 @@
-import ru.practicum.task_manager.manager.HistoryManager;
-import ru.practicum.task_manager.manager.InMemoryHistoryManager;
-import ru.practicum.task_manager.manager.InMemoryTaskManager;
-import ru.practicum.task_manager.manager.TaskManager;
+package ru.practicum.task_manager.manager;
 
 public class Managers {
     private Managers() {

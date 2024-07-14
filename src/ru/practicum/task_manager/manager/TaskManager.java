@@ -4,10 +4,11 @@ import ru.practicum.task_manager.task.Epic;
 import ru.practicum.task_manager.task.Subtask;
 import ru.practicum.task_manager.task.Task;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface TaskManager {
+    HistoryManager getHistoryManager();
+
     //а. Получение списка задач:
     List<Task> getTasks();
 
