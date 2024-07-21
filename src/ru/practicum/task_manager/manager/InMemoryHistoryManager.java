@@ -43,7 +43,7 @@ public class InMemoryHistoryManager implements HistoryManager {
             if (oldNode != null) {
                 removeNode(oldNode);
             }
-            Task taskCopy = new Task(task.getId(), task.getName(), task.getDescription(), task.getStatus());
+            Task taskCopy = new Task(task.getId(), task.getName(), task.getDescription(), task.getStatus(), task.getType());
             Node newNode = new Node(taskCopy);
             if (first == null) {
                 first = last = newNode;

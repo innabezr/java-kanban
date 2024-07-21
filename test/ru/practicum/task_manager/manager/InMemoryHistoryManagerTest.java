@@ -6,6 +6,7 @@ import ru.practicum.task_manager.manager.Managers;
 import ru.practicum.task_manager.manager.TaskManager;
 import ru.practicum.task_manager.task.Status;
 import ru.practicum.task_manager.task.Task;
+import ru.practicum.task_manager.task.Type;
 
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,7 +31,7 @@ class InMemoryHistoryManagerTest {
 
     @Test
     public void historyAddTest() {
-        Task task1 = new Task("Задача первая", "Описание первой задачи", Status.NEW);
+        Task task1 = new Task("Задача первая", "Описание первой задачи", Status.NEW, Type.TASK);
         taskManager.createTask(task1);
         historyManager.add(task1);
         List<Task> history = historyManager.getHistory();
@@ -39,7 +40,7 @@ class InMemoryHistoryManagerTest {
 
     @Test
     public void getHistoryTest() {
-        Task task1 = new Task("Задача первая", "Описание первой задачи", Status.NEW);
+        Task task1 = new Task("Задача первая", "Описание первой задачи", Status.NEW, Type.TASK);
         taskManager.createTask(task1);
         historyManager.add(task1);
         assertNotNull(historyManager.getHistory());
@@ -47,7 +48,7 @@ class InMemoryHistoryManagerTest {
 
     @Test
     public void TaskInHistoryComareTaskInManager() {
-        Task task = new Task("Task", "Description", Status.NEW);
+        Task task = new Task("Task", "Description", Status.NEW, Type.TASK);
         taskManager.createTask(task);
         historyManager.add(task);
         task.setName("Updated Task");
@@ -61,7 +62,7 @@ class InMemoryHistoryManagerTest {
 
     @Test
     public void DoubleTaskTest() {
-        Task task = new Task("Task", "Description", Status.NEW);
+        Task task = new Task("Task", "Description", Status.NEW, Type.TASK);
         taskManager.createTask(task);
         historyManager.add(task);
         historyManager.add(task);
@@ -71,8 +72,8 @@ class InMemoryHistoryManagerTest {
 
     @Test
     public void removeTaskTest() {
-        Task task = new Task(1, "Task", "Description", Status.NEW);
-        Task task2 = new Task(2, "Task2", "Description", Status.NEW);
+        Task task = new Task(1, "Task", "Description", Status.NEW, Type.TASK);
+        Task task2 = new Task(2, "Task2", "Description", Status.NEW, Type.TASK);
         historyManager.add(task);
         historyManager.add(task2);
         historyManager.remove(1);

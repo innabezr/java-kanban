@@ -2,10 +2,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.practicum.task_manager.manager.Managers;
 import ru.practicum.task_manager.manager.TaskManager;
-import ru.practicum.task_manager.task.Epic;
-import ru.practicum.task_manager.task.Status;
-import ru.practicum.task_manager.task.Subtask;
-import ru.practicum.task_manager.task.Task;
+import ru.practicum.task_manager.task.*;
 
 
 import java.util.List;
@@ -22,15 +19,15 @@ class InMemoryTaskManagerTest {
 
     @Test
     void EpicEqlByIdTest() {
-        Task task1 = new Task(1, "Task 1", "Description 1", Status.NEW);
-        Task task2 = new Task(1, "Task 1", "Description 1", Status.NEW);
+        Task task1 = new Task(1, "Task 1", "Description 1", Status.NEW, Type.TASK);
+        Task task2 = new Task(1, "Task 1", "Description 1", Status.NEW, Type.TASK);
         assertEquals(task1, task2);
     }
 
     @Test
     void TaskEqlByIdTest() {
-        Epic epic1 = new Epic("Эпическая задача 1", "Описание первой эпической задачи");
-        Epic epic2 = new Epic("Эпическая задача 1", "Описание первой эпической задачи");
+        Epic epic1 = new Epic("Эпическая задача 1", "Описание первой эпической задачи", Status.NEW, Type.EPIC);
+        Epic epic2 = new Epic("Эпическая задача 1", "Описание первой эпической задачи", Status.NEW, Type.EPIC);
         assertEquals(epic1, epic2);
     }
 
@@ -59,8 +56,8 @@ class InMemoryTaskManagerTest {
 
     @Test
     void searchByIdTMTest() {
-        Task task = new Task("Task", "Description", Status.NEW);
-        Epic epic = new Epic("Epic", "Description");
+        Task task = new Task("Task", "Description", Status.NEW, Type.TASK);
+        Epic epic = new Epic("Epic", "Название эпика", Status.NEW, Type.EPIC);
         Subtask subtask = new Subtask("Subtask", "Description", Status.NEW, epic.getId());
         taskManager.createTask(task);
         taskManager.createEpicTask(epic);
@@ -72,8 +69,8 @@ class InMemoryTaskManagerTest {
 
     @Test
     void taskWithIdTest() {
-        Task task1 = new Task(0, "Задача1", "Описание", Status.NEW);
-        Task task2 = new Task("Задача2", "Описание", Status.NEW);
+        Task task1 = new Task(0, "Задача1", "Описание", Status.NEW, Type.TASK);
+        Task task2 = new Task("Задача2", "Описание", Status.NEW, Type.TASK);
         taskManager.createTask(task1);
         taskManager.createTask(task2);
         assertEquals(task1.getId(), 0);
@@ -82,7 +79,7 @@ class InMemoryTaskManagerTest {
 
     @Test
     void compareAllFieldTest() {
-        Task task1 = new Task(0, "Задача1", "Описание", Status.NEW);
+        Task task1 = new Task(0, "Задача1", "Описание", Status.NEW, Type.TASK);
         taskManager.createTask(task1);
         assertEquals(task1.getId(), 0);
         assertEquals(task1.getName(), "Задача1");
@@ -92,7 +89,7 @@ class InMemoryTaskManagerTest {
 
     @Test
     void deletedSubtask() {
-        Epic epic = new Epic("Epic", "Description");
+        Epic epic = new Epic("Epic", "Description", Status.NEW, Type.EPIC);
         taskManager.createEpicTask(epic);
         Subtask subtask1 = new Subtask("Subtask1", "Description", Status.NEW, epic.getId());
         Subtask subtask2 = new Subtask("Subtask2", "Description", Status.NEW, epic.getId());
@@ -106,7 +103,7 @@ class InMemoryTaskManagerTest {
 
     @Test
     public void epicFreeFromSubtask() {
-        Epic epic = new Epic("Epic", "Description");
+        Epic epic = new Epic("Epic", "Description", Status.NEW, Type.EPIC);
         taskManager.createEpicTask(epic);
         Subtask subtask1 = new Subtask("Subtask1", "Description", Status.NEW, epic.getId());
         Subtask subtask2 = new Subtask("Subtask2", "Description", Status.NEW, epic.getId());
@@ -130,7 +127,7 @@ class InMemoryTaskManagerTest {
 
     @Test
     void testSetters() {
-        Task task = new Task(1, "Task 1", "Description 1", Status.NEW);
+        Task task = new Task(1, "Task 1", "Description 1", Status.NEW, Type.TASK);
         task.setName("Updated Task");
         task.setDescription("Updated Description");
         task.setStatus(Status.IN_PROGRESS);
@@ -141,7 +138,7 @@ class InMemoryTaskManagerTest {
 
     @Test
     void testGetters() {
-        Task task = new Task(1, "Task 1", "Description 1", Status.NEW);
+        Task task = new Task(1, "Task 1", "Description 1", Status.NEW, Type.TASK);
         assertEquals(1, task.getId());
         assertEquals("Task 1", task.getName());
         assertEquals("Description 1", task.getDescription());
@@ -150,7 +147,7 @@ class InMemoryTaskManagerTest {
 
     @Test
     void UpdateTaskTest() {
-        Task task = new Task(1, "Task 1", "Description 1", Status.NEW);
+        Task task = new Task(1, "Task 1", "Description 1", Status.NEW, Type.TASK);
         taskManager.createTask(task);
         task.setName("Updated Task");
         task.setDescription("Updated Description");
