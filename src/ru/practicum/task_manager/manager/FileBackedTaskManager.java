@@ -12,7 +12,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
 
     private final Path file;
-    private final static String PATH_TO_FILES = "src/path/test.csv";
+    private static final String PATH_TO_FILES = "src/path/test.csv";
 
     public FileBackedTaskManager(Path file) {
         super();
