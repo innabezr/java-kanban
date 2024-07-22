@@ -5,11 +5,13 @@ import org.junit.jupiter.api.Test;
 import ru.practicum.task_manager.task.*;
 
 
+import java.nio.file.Path;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryTaskManagerTest {
+    private static final Path TEST_FILE_PATH = Path.of("src/path/test.csv");
     private TaskManager taskManager;
 
     @BeforeEach

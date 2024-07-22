@@ -12,9 +12,11 @@ import ru.practicum.task_manager.task.Type;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.nio.file.Path;
 import java.util.List;
 
 class InMemoryHistoryManagerTest {
+    private static final Path TEST_FILE_PATH = Path.of("src/path/test.csv");
     private TaskManager taskManager;
     private HistoryManager historyManager;
 
