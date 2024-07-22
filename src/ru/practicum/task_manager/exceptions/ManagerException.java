@@ -1,4 +1,4 @@
-package ru.practicum.task_manager.manager;
+package ru.practicum.task_manager.exceptions;
 
 public class ManagerException extends RuntimeException {
     private static final String ERR_save = "Error while saving";
