@@ -1,9 +1,6 @@
 import ru.practicum.task_manager.manager.Managers;
 import ru.practicum.task_manager.manager.TaskManager;
-import ru.practicum.task_manager.task.Epic;
-import ru.practicum.task_manager.task.Status;
-import ru.practicum.task_manager.task.Subtask;
-import ru.practicum.task_manager.task.Task;
+import ru.practicum.task_manager.task.*;
 
 
 public class Main {
@@ -15,11 +12,11 @@ public class Main {
     private static void testTasks() {
         TaskManager taskManager = Managers.getDefault();
         //1.Создайте две задачи, эпик с тремя подзадачами и эпик без подзадач.
-        Task task1 = new Task("Задача первая", "Описание первой задачи", Status.NEW);
-        Task task2 = new Task("Задача вторая", "Описание второй задачи", Status.NEW);
+        Task task1 = new Task("Задача первая", "Описание первой задачи", Status.NEW, Type.TASK);
+        Task task2 = new Task("Задача вторая", "Описание второй задачи", Status.NEW, Type.TASK);
         taskManager.createTask(task1);
         taskManager.createTask(task2);
-        Epic epic1 = new Epic("Эпическая задача 1", "Есть 3 подзадачи");
+        Epic epic1 = new Epic("Эпическая задача 1", "Есть 3 подзадачи", Status.NEW, Type.EPIC);
         taskManager.createEpicTask(epic1);
         Subtask subtask1 = new Subtask("Подзадача 1", "Описание подзадачи 1", Status.NEW, epic1.getId());
         Subtask subtask2 = new Subtask("Подзадача 2", "Описание подзадачи 2", Status.NEW, epic1.getId());
@@ -27,7 +24,7 @@ public class Main {
         taskManager.createSubtask(epic1.getId(), subtask1);
         taskManager.createSubtask(epic1.getId(), subtask2);
         taskManager.createSubtask(epic1.getId(), subtask3);
-        Epic epic2 = new Epic("Эпическая задача 2", "нет подзадач");
+        Epic epic2 = new Epic("Эпическая задача 2", "нет подзадач", Status.NEW, Type.EPIC);
         taskManager.createEpicTask(epic2);
         //2.Запросите созданные задачи несколько раз в разном порядке
         taskManager.getTaskWithId(task1.getId());
