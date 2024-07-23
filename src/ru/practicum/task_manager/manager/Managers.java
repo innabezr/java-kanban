@@ -1,13 +1,16 @@
 package ru.practicum.task_manager.manager;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Managers {
     private Managers() {
     }
 
     public static TaskManager getDefault() {
-        return new FileBackedTaskManager(new File("src/path/test.csv").toPath());
+        Path filePath = Paths.get("src/path/test.csv");
+        return new FileBackedTaskManager(filePath);
     }
 
     public static HistoryManager getDefaultHistory() {

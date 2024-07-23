@@ -2,9 +2,6 @@ package ru.practicum.task_manager.manager;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.practicum.task_manager.manager.HistoryManager;
-import ru.practicum.task_manager.manager.Managers;
-import ru.practicum.task_manager.manager.TaskManager;
 import ru.practicum.task_manager.task.Status;
 import ru.practicum.task_manager.task.Task;
 import ru.practicum.task_manager.task.Type;
@@ -12,11 +9,9 @@ import ru.practicum.task_manager.task.Type;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.nio.file.Path;
 import java.util.List;
 
 class InMemoryHistoryManagerTest {
-    private static final Path TEST_FILE_PATH = Path.of("src/path/test.csv");
     private TaskManager taskManager;
     private HistoryManager historyManager;
 

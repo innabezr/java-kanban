@@ -12,7 +12,7 @@ public class ManagerException extends RuntimeException {
         return new ManagerException(ERR_load, e);
     }
 
-    private ManagerException(String ERR, Exception e) {
+    protected ManagerException(String ERR, Exception e) {
         super(ERR, e);
     }
 }
