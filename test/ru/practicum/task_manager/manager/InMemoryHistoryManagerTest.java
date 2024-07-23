@@ -6,10 +6,9 @@ import ru.practicum.task_manager.task.Status;
 import ru.practicum.task_manager.task.Task;
 import ru.practicum.task_manager.task.Type;
 
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.List;
 
 class InMemoryHistoryManagerTest {
     private TaskManager taskManager;
@@ -21,10 +20,10 @@ class InMemoryHistoryManagerTest {
         taskManager = Managers.getDefault();
     }
 
-
     @Test
     public void managerHistoryTest() {
-        assertNotNull(historyManager = Managers.getDefaultHistory());
+        historyManager = Managers.getDefaultHistory();
+        assertNotNull(historyManager);
     }
 
     @Test
@@ -33,7 +32,8 @@ class InMemoryHistoryManagerTest {
         taskManager.createTask(task1);
         historyManager.add(task1);
         List<Task> history = historyManager.getHistory();
-        assertEquals(1, history.size());
+        assertEquals(1, history.size(), "В истории 1 задача");
+        assertEquals(task1, history.get(0), "Задача в истории должна совпадать с добавленной");
     }
 
     @Test
@@ -41,31 +41,37 @@ class InMemoryHistoryManagerTest {
         Task task1 = new Task("Задача первая", "Описание первой задачи", Status.NEW, Type.TASK);
         taskManager.createTask(task1);
         historyManager.add(task1);
-        assertNotNull(historyManager.getHistory());
+        List<Task> history = historyManager.getHistory();
+        assertNotNull(history, "История не null");
+        assertFalse(history.isEmpty(), "История не пустая");
     }
 
     @Test
-    public void TaskInHistoryComareTaskInManager() {
+    public void taskInHistoryCompareTaskInManager() {
         Task task = new Task("Task", "Description", Status.NEW, Type.TASK);
         taskManager.createTask(task);
         historyManager.add(task);
+
+        // Обновляем задачу в taskManager
         task.setName("Updated Task");
         taskManager.updateTask(task);
+
         List<Task> history = historyManager.getHistory();
-        System.out.println(history);
         assertEquals("Task", history.get(0).getName());
         assertEquals("Description", history.get(0).getDescription());
-        assertEquals(Status.NEW, history.get(0).getStatus());
+        assertEquals(Status.NEW, history.get(0).getStatus(), "Статус = NEW");
     }
 
     @Test
-    public void DoubleTaskTest() {
+    public void doubleTaskTest() {
         Task task = new Task("Task", "Description", Status.NEW, Type.TASK);
         taskManager.createTask(task);
         historyManager.add(task);
         historyManager.add(task);
+
         List<Task> history = historyManager.getHistory();
-        assertEquals(1, history.size());
+        assertEquals(1, history.size(), "История не должна содержать дубликатов задач");
+        assertEquals(task, history.get(0), "Задача в истории должна совпадать с добавленной");
     }
 
     @Test

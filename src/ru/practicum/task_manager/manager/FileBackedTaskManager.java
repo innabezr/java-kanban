@@ -73,7 +73,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
 
-    protected void save() {
+    public void save() {
         try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file.toFile()), StandardCharsets.UTF_8))) {
             // Заголовки
             bw.write(SCVFormatter.getHeaders());
@@ -131,7 +131,19 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         // Загрузка задач из файла
         TaskManager newTaskManager = FileBackedTaskManager.loadFromFile(new File("src/path/test.csv"));
         List<Task> loadedTasks = newTaskManager.getTasks();
+        List<Epic> loadedEpics = newTaskManager.getEpics();
+        List<Subtask> loadedSubtasks = newTaskManager.getSubtasks();
 
+        // Вывод всех задач
+        for (Task task : loadedTasks) {
+            System.out.println(task);
+        }
+        for (Epic epic : loadedEpics) {
+            System.out.println(epic);
+        }
+        for (Subtask subtask : loadedSubtasks) {
+            System.out.println(subtask);
+        }
     }
 
 }
